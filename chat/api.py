@@ -54,9 +54,13 @@ class Chat(webapp2.RequestHandler):
 
         user = users.get_current_user()
         user_url = ""
+        user_logout_url = ""
 
         if not user:
             user_url = users.create_login_url(self.request.uri)
+        else:
+            user_logout_url = users.create_logout_url('/')
+
 
 
         template_values = {
@@ -64,7 +68,8 @@ class Chat(webapp2.RequestHandler):
             'user_url':user_url,
             'entries':entries,
             'chat_code':chat_code,
-            'init_url':init_url
+            'init_url':init_url,
+            'user_logout_url':user_logout_url
 
         }
 

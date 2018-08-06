@@ -38,6 +38,17 @@ input[type=submit] {
     cursor: pointer;
 }
 
+input[type=submit].smallred {
+    width: 6%;
+    background-color: #E74C3C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 body {
     background-color: #f2f2f2;
 }
@@ -89,7 +100,12 @@ p.chattextfriend {
 </head>
 {% if user_url != "" %}
    <script>window.location.href = "{{ user_url|safe }}"</script>
+{% else %}
+   <form method="post" action="{{ user_logout_url|safe }}">
+       <input class="smallred" type="submit" value="logout">
+   </form>
 {% endif %}
+
 Your chat room url (Please share this url with your friend) :
 <input class="urlinform" type="text" id="yourclink" value="{{ init_url }}">
 <button class="btn" type="button" data-clipboard-action="copy" data-clipboard-target="#yourclink">
