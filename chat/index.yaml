@@ -1,0 +1,6 @@
+indexes:
+- kind: Entry
+  ancestor: yes
+  properties:
+  - name: date
+    direction: asc

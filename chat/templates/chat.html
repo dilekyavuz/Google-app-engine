@@ -1,0 +1,138 @@
+{% autoescape true %}
+<html>
+<style type="text/css">
+
+input[type=text].urlinform {
+    width: 30%;
+    height: 40px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=text].chatbox {
+    width: 100%;
+    height: 90px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+
+input[type=submit] {
+    width: 15%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+body {
+    background-color: #f2f2f2;
+}
+
+
+
+h1 {
+   text-align: center;
+   color: #4CAF50;
+   text-transform: uppercase;
+}
+
+
+p.chattextyou {
+    border: 1px solid black;
+    box-sizing: border-box;
+    width: 400px;
+    height: 150px;
+    padding: 12px 20px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 30px;
+    margin-left: 30px;
+    background-color: lightblue;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+p.chattextfriend {
+    border: 1px solid black;
+    box-sizing: border-box;
+    width: 400px;
+    height: 150px;
+    padding: 12px 20px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 30px;
+    margin-left: 25%;
+    background-color: lightblue;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+
+</style>
+<head>
+    <script type="text/javascript" src="/bootstrap/js/jquery-3.3.1.js"></script>
+</head>
+{% if user_url != "" %}
+   <script>window.location.href = "{{ user_url|safe }}"</script>
+{% endif %}
+Your chat room url (Please share this url with your friend) :
+<input class="urlinform" type="text" id="yourclink" value="{{ init_url }}">
+<button class="btn" type="button" data-clipboard-action="copy" data-clipboard-target="#yourclink">
+    <img src="/bootstrap/img/clippy.svg" width="15" alt="Copy to clipboard">
+</button>
+<br>
+<script src="/bootstrap/js/clipboard.min.js"></script>
+<script>
+        var clipboard = new ClipboardJS('.btn');
+
+        clipboard.on('success', function(e) {
+           console.info('Action:', e.action);
+           console.info('Text:', e.text);
+           console.info('Trigger:', e.trigger);
+
+           e.clearSelection();
+        });
+
+        clipboard.on('error', function(e) {
+           console.error('Action:', e.action);
+           console.error('Trigger:', e.trigger);
+        });
+</script>
+<div id="refresh">
+{% for init_entry in entries %}
+   {% if init_entry.author.identity == user.user_id() %}
+       <p class="chattextyou">{{ init_entry.content }}</p>
+   {% else %}
+       <p class="chattextfriend">{{ init_entry.content }}</p>
+   {% endif %}
+{% endfor %}
+ </div>
+<form action="/chat?chat_code={{ chat_code }}" method="post">
+    <input class="chatbox" type="text" name="entry" placeholder="Your message..">
+    <input type="submit" value="Send!">
+</form>
+<script>
+var refreshFunc = function(){
+  $('#refresh').load('/chat?chat_code={{ chat_code }}'+  ' #refresh');
+};
+
+setInterval(refreshFunc, 1000);
+
+</script>
+</html>
+{% endautoescape %}
