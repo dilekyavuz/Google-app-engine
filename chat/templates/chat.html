@@ -116,9 +116,11 @@ Your chat room url (Please share this url with your friend) :
 <div id="refresh">
 {% for init_entry in entries %}
    {% if init_entry.author.identity == user.user_id() %}
-       <p class="chattextyou">{{ init_entry.content }}</p>
+       <p class="chattextyou">
+           {{ init_entry.author.email }} <b>(You)</b> wrote:<br><br>{{ init_entry.content }}</p>
    {% else %}
-       <p class="chattextfriend">{{ init_entry.content }}</p>
+       <p class="chattextfriend">
+           {{ init_entry.author.email }} wrote:<br><br>{{ init_entry.content }}</p>
    {% endif %}
 {% endfor %}
  </div>
