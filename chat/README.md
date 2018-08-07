@@ -17,4 +17,4 @@ Chat is a simple app which provides us with an environment for chatting!
 - [jinja2][6]
 
 
-You can reach the app at: https://cetintekin-209212.appspot.com/
+You can reach the cloud app at: https://cetintekin-209212.appspot.com/
