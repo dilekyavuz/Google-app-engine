@@ -104,8 +104,6 @@ p.chattextfriend {
    <form method="post" action="{{ user_logout_url|safe }}">
        <input class="smallred" type="submit" value="logout">
    </form>
-{% endif %}
-
 Your chat room url (Please share this url with your friend) :
 <input class="urlinform" type="text" id="yourclink" value="{{ init_url }}">
 <button class="btn" type="button" data-clipboard-action="copy" data-clipboard-target="#yourclink">
@@ -149,8 +147,10 @@ var refreshFunc = function(){
   $('#refresh').load('/chat?chat_code={{ chat_code }}'+  ' #refresh');
 };
 
+$('body').scrollTop($('body')[0].scrollHeight);
 setInterval(refreshFunc, 1000);
 
 </script>
+{% endif %}
 </html>
 {% endautoescape %}
